@@ -20,7 +20,7 @@ async function activate(context) {
   const javaInst = await javaInstalado();
   if (!context.globalState.get('instalado', false) || (!fs.existsSync(path.join(context.extensionPath, 'jre')) && !javaInst)) {
     setup(context);
-  }
+  } 
 
   /**
  * Muestra una hint con las marcas de SIMAE en la linea que se encuentra el usuario.

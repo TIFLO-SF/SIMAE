@@ -60,7 +60,7 @@ async function armarMultimap(filePath, context, editor, idioma) {
 
   return new Promise((resolve, reject) => {
     getEncoding(editor).then(encoding => {
-      let encodingString = encoding ? encoding : "UTF-8";
+      let encodingString = encoding ? encoding : "UTF-8"; //la codificacion por defecto es UTF-8
       const proceso = spawn(javaBin, ['-jar', simaeJar, filePath, encodingString, idioma]);
 
       let salidaConsola = '';
@@ -118,7 +118,8 @@ async function armarMultimap(filePath, context, editor, idioma) {
  /**
  * Convierte el multimap en un arreglo de objetos Marca.
  * @param {Map<number, Marca[]>} multimap - El Map que contiene las marcas agrupadas por fila.
- * @returns {Array} Arreglo de marcas. Si hay mas de una marca con la misma clave se colocan de forma consecutiva en el arreglo
+ * @returns {Array<Marca>} Arreglo de marcas. Si hay mas de una marca con la misma clave se colocan de forma consecutiva en el arreglo
+ * TODO: El arreglo que se retorna debe ser un arreglo de marcas y luego usarse en los metodos una marca
  */
 
 
@@ -126,10 +127,7 @@ function multimapToArray(multimap) {
   const resultado = [];
   for (const [key, marcas] of multimap) {
     for (const marca of marcas) {
-      let fila= marca.fila;
-      let columna = marca.columna;
-      let texto = marca.marca;
-      resultado.push({fila, columna, texto});
+      resultado.push(marca);
     }
   }
   return resultado;
@@ -137,7 +135,7 @@ function multimapToArray(multimap) {
 
 /**
  * Encuentra la siguiente marca más cercana en dirección derecha a partir de la línea donde se encuentra el usuario.
- * @param {Array} arreglo - Arreglo de marcas.
+ * @param {Array<Marca>} arreglo - Arreglo de marcas.
  * @param {number} fila - El número de línea en la que se encuentra el usuario.
  */
 function siguientePosicion(arreglo, fila) {
@@ -149,12 +147,12 @@ function siguientePosicion(arreglo, fila) {
       return arreglo[i + 1];
     }
   }
-  return -1;
+  return null;
 }
 
 /**
  * Encuentra la siguiente marca más cercana en dirección izquierda a partir de la línea donde se encuentra el usuario.
- * @param {Array} arreglo - Arreglo de marcas
+ * @param {Array<Marca>} arreglo - Arreglo de marcas
  * @param {number} fila - El número de línea en la que se encuentra el usuario.
  */
 function anteriorPosicion(arreglo, fila) {
@@ -166,7 +164,7 @@ function anteriorPosicion(arreglo, fila) {
       return arreglo[i - 1];
     }
   }
-  return -1;
+  return null;
 }
 
 /**
@@ -180,7 +178,7 @@ function moverCursor(ultimasMarcas, editor, antsig){
   const direccion = antsig === 1 ? msg("derecha") : msg("izquierda");
   let arreglo = multimapToArray(ultimasMarcas);
   let siguienteMarca = antsig === 1? siguientePosicion(arreglo, editor.selection.active.line + 1) : anteriorPosicion(arreglo, editor.selection.active.line + 1);
-  if(siguienteMarca != -1){
+  if(siguienteMarca != null){
     const posicion = new vscode.Position(siguienteMarca.fila - 1, siguienteMarca.columna+1);
     const rango = new vscode.Range(posicion, posicion);
     editor.selection = new vscode.Selection(posicion, posicion);
