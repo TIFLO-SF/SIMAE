@@ -54,10 +54,8 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
-
     implementation 'info.picocli:picocli:4.6.3'
     annotationProcessor 'info.picocli:picocli-codegen:4.6.3'
-
     implementation project(':simae-languages')
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
@@ -76,7 +74,7 @@ task crearJarAPI(type: Jar) {
     duplicatesStrategy = 'exclude'
     archiveClassifier.set('simaeAPI')
     from sourceSets.main.output //agrega archivos compilados
-    exclude('**/javafx/**/*.class', '**/picocli/**/*.class', '**/javax**/*.class', '**/**/*.dll', '**/**/*.so', '**/**/*.dylib')
+    exclude('**/module-info.class', '**/javafx/**/*.class', '**/picocli/**/*.class', '**/javax**/*.class', '**/**/*.dll', '**/**/*.so', '**/**/*.dylib')
     manifest {
         attributes 'Main-Class': 'simae.api.API'
     }

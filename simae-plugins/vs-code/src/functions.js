@@ -1,8 +1,9 @@
 const vscode = require('vscode');
 const jschardet = require('jschardet');
+const path = require('path');
 const { spawn } = require('child_process');
 const { msg } = require('./locale.js');
-
+const { Marca } = require('./models/marca.js')
 
 
  /**
@@ -31,45 +32,65 @@ function mostrarMarcas(multimap, editor) {
   }
   
 
- /**
- * Ejecuta el archivo simae.jar mediante el comando 'java' y devuelve un multimap de marcas resultante.
+/**
+ * Ejecuta el archivo simae.jar utilizando el JRE configurado y devuelve un multimap de marcas resultante.
  * @param {string} filePath - La ruta absoluta del JAR de SIMAE.
  * @param {Object} context - El contexto del editor de vs code.
  * @param {vscode.TextEditor} editor - El editor que se encuentra activo y donde está abierto el archivo.
+ * @param {string} idioma - El idioma para la ejecución.
  * @returns {Promise<Map<number, Marca[]>>} Una promesa que se resuelve con un objeto Map que contiene las marcas.
- * @throws {string} Si ocurrio un error en la ejecución del JAR.
+ * @throws {string} Si ocurrió un error en la ejecución del JAR.
  */
+async function armarMultimap(filePath, context, editor, idioma) {
+  let jrePath = context.globalState.get('jrePath');
+  if (!jrePath) {
+    vscode.window.showErrorMessage('Error: JRE path not found.');
+    return null;
+  }
+
+  const javaBin = path.join(jrePath, 'bin', 'java');
+  
+  process.env['JAVA_HOME'] = jrePath;
+  process.env['PATH'] = `${path.join(jrePath, 'bin')}${path.delimiter}${process.env['PATH']}`;
 
 
- async function armarMultimap(filePath, context, editor, idioma) {
-   const path = require('path'); //path
-   const simaeJar = path.join(context.extensionPath, 'libs', 'resources', 'simae.jar'); //path relativo del jar
-   let errorConsola = '';
-   await editor.document.save();
-   return new Promise((resolve, reject) => {
-     getEncoding(editor).then(encoding => {
-       let encodingString = encoding ? encoding : "UTF-8";
-         const proceso = spawn('java', ['-jar', simaeJar, filePath, encodingString, idioma]);
-         let salidaConsola = '';
-         proceso.stdout.on('data', (datos) => {
-           salidaConsola += datos;
-         });
-         proceso.stderr.on('data', (datos) => {
-           errorConsola += datos;
-         });
-         proceso.on('close', (code) => {
-           if (code == 0) {
-             console.log("Idioma: "+  idioma);
-             const salida = salidaConsola.trim().split('\n');
-             const marcas = procesarSalida(salida);
-             resolve(marcas); //si todo ok resuelve la promesa con el multimap
-           } else {
-             reject(msg("errorEjecucion") + " " +  errorConsola); //falla porque se obtuvo codigo distinto de 0
-           }
-         });
-     });
-   });
- }
+  const simaeJar = path.join(context.extensionPath, 'libs', 'resources', 'simae.jar');
+  let errorConsola = '';
+  await editor.document.save();
+
+  return new Promise((resolve, reject) => {
+    getEncoding(editor).then(encoding => {
+      let encodingString = encoding ? encoding : "UTF-8";
+      const proceso = spawn(javaBin, ['-jar', simaeJar, filePath, encodingString, idioma]);
+
+      let salidaConsola = '';
+      proceso.stdout.on('data', (datos) => {
+        salidaConsola += datos;
+      });
+
+      proceso.stderr.on('data', (datos) => {
+        errorConsola += datos;
+      });
+
+      proceso.on('close', (code) => {
+        if (code == 0) {
+          console.log("Idioma: " + idioma);
+          const salida = salidaConsola.trim().split('\n');
+          const marcas = procesarSalida(salida);
+          resolve(marcas);
+        } else {
+          vscode.window.showErrorMessage("Error en la ejecución: " + errorConsola);
+          reject(msg("errorEjecucion") + " " + errorConsola);
+        }
+      });
+
+      proceso.on('error', (err) => {
+        vscode.window.showErrorMessage("Error al iniciar el proceso: " + err.message);
+        reject(err.message);
+      });
+    });
+  });
+}
 
     
     /**
@@ -193,15 +214,6 @@ function abrirAyuda(){
 }
 
 
-
-class Marca {
-  constructor(fila, columna, marca) {
-    this.fila = fila;
-    this.columna = columna;
-    this.marca = marca;
-  }
-
-}
 
 
 module.exports = { //exporta funcionas usadas por la extension
