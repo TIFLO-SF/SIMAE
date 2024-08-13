@@ -1,16 +1,13 @@
 package simae.core;
 
 import simae.core.lib.Lenguaje;
+import simae.core.lib.Simae;
 
-public class SimaeLauncher {
+public abstract class SimaeLauncher {
 
-    private static String VERSION = "SIMAE 0.3.0";
-    public SimaeLauncher() {
-    }
+    public static String VERSION = "SIMAE 0.3.0";
+    protected Simae simae;
 
-    public static String getVERSION() {
-        return VERSION;
-    }
 
     public static Lenguaje lenguaje(String lenguajeString) {
         switch(lenguajeString) {

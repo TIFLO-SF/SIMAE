@@ -9,10 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
-import simae.standalone.lib.SimaeStandalone;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -107,7 +104,7 @@ public class SelectorApplicationController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory == null) {
-            System.out.println("No seleccinó ninguna carpeta");
+            System.out.println("No seleccionó ninguna carpeta");
         } else {
             Path dir = selectedDirectory.toPath();
             Files.find(dir, Integer.MAX_VALUE, (path, attributes) ->
@@ -148,12 +145,12 @@ public class SelectorApplicationController {
                                 ((Archivo)file).getFile().toString(),
                                 lenguaje(file.toString().substring(file.toString().lastIndexOf(".")))
                         ))) {
-            SimaeStandalone.reproducirAudio(1);
+            simaeLauncher.reproducirAudio(1);
             textoError.setVisible(true);
         }
 
         if (!textoError.isVisible()) {
-            SimaeStandalone.reproducirAudio(0);
+            simaeLauncher.reproducirAudio(0);
             textoProcesado.setVisible(true);
         }
 
