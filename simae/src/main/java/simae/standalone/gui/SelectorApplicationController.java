@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import simae.standalone.SimaeLauncherStandalone;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,21 +53,6 @@ public class SelectorApplicationController {
         return null;
     }
 
-    private String lenguaje(String extension) {
-        switch (extension) {
-            case ".cpp":
-                return "C++";
-            case ".java":
-                return "Java";
-            case ".py":
-                return "Python3";
-            case "cSharp":
-            case ".cs":
-                return "CSharp";
-        }
-        return null;
-    }
-
     private void eliminaOtrosLenguajes() {
         for (int i = 0; i < listaObservable.size(); i++) {
             Archivo archivo = (Archivo) listaObservable.get(i);
@@ -94,7 +80,6 @@ public class SelectorApplicationController {
             archivos.stream()
                     .filter(file -> !listaArchivosObjeto.stream().anyMatch(archivo -> file.equals(archivo.getFile()))) //FIXME: sobreescribir equals y usar contains
                     .forEach(file -> listaArchivosObjeto.add(new Archivo(file)));
-
             actualizaLista();
         }
     }
@@ -107,8 +92,11 @@ public class SelectorApplicationController {
             System.out.println("No seleccionó ninguna carpeta");
         } else {
             Path dir = selectedDirectory.toPath();
+            // Lista de extensiones permitidas
+            List<String> allowedExtensions = Arrays.asList(".cpp", ".java", ".cs", ".py");
+            // Filtra y agrega archivos con las extensiones permitidas
             Files.find(dir, Integer.MAX_VALUE, (path, attributes) ->
-                            path.getFileName().toString().toLowerCase().endsWith(extension()))
+                            allowedExtensions.stream().anyMatch(ext -> path.getFileName().toString().toLowerCase().endsWith(ext)))
                     .forEach(file -> listaArchivosObjeto.add(new Archivo(file.toFile())));
             actualizaLista();
         }
@@ -138,12 +126,12 @@ public class SelectorApplicationController {
                         !(simaeLauncher.launchTagging(
                                 ((Archivo)file).getFile(),
                                 ((Archivo)file).getFile().toString(),
-                                lenguaje(file.toString().substring(file.toString().lastIndexOf(".")))
+                                file.toString().substring(file.toString().lastIndexOf("."))
                         ) == 0) :
                         !simaeLauncher.launchUntagging(
                                 ((Archivo)file).getFile(),
                                 ((Archivo)file).getFile().toString(),
-                                lenguaje(file.toString().substring(file.toString().lastIndexOf(".")))
+                                file.toString().substring(file.toString().lastIndexOf("."))
                         ))) {
             simaeLauncher.reproducirAudio(1);
             textoError.setVisible(true);
@@ -154,16 +142,9 @@ public class SelectorApplicationController {
             textoProcesado.setVisible(true);
         }
 
-
-        /*for (File file : archivos) {
-            System.out.println(file.toString().substring(file.toString().lastIndexOf(".")));
-            simae.marcaDesmarcaPorArchivos(file, file.toString(), lenguaje(file.toString().substring(file.toString().lastIndexOf("."))), decideMarca);
-        }*/
-        //archivos.parallelStream().forEach(file -> simae.marcaDesmarcaPorArchivos(file, file.toString(), lenguaje(file.toString().substring(file.toString().lastIndexOf("."))), decideMarca));
         long fin = System.currentTimeMillis();
         long resta = fin - inicio;
         System.out.println("Tiempo de ejec: " + resta + " milisegundos.");
-
     }
 
 

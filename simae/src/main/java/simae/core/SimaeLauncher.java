@@ -9,7 +9,7 @@ public abstract class SimaeLauncher {
     protected Simae simae;
 
 
-    public static Lenguaje lenguaje(String lenguajeString) {
+    public Lenguaje lenguaje(String lenguajeString) {
         switch(lenguajeString) {
             case "c++":
             case ".cpp":

@@ -29,9 +29,10 @@ public class SimaeLauncherStandalone extends SimaeLauncher {
         return true;
     }
 
-    public int launchTagging(File inputFile, String outpuftFileName, String lenguajeString){
+    public int launchTagging(File inputFile, String outpuftFileName, String languageString){
         BufferedReader inputReaderC = null;
         PrintWriter workWriterC = null;
+        Lenguaje lenguaje = lenguaje(languageString);
         File workFileC = null;
         try {
             inputReaderC = new BufferedReader(new FileReader(inputFile));
@@ -41,7 +42,6 @@ public class SimaeLauncherStandalone extends SimaeLauncher {
             System.out.println("Fallo algo en los argumentos");
         }
         try {
-            Lenguaje lenguaje = lenguaje(lenguajeString.toLowerCase());
             this.simae.fuenteMarcado(inputReaderC, workWriterC, lenguaje, null);
             workWriterC.close();
         } catch (IOException e) {
@@ -62,11 +62,12 @@ public class SimaeLauncherStandalone extends SimaeLauncher {
         return salida;
     }
 
-    public boolean launchUntagging(File inputFile, String outputFileName, String lenguajeString) {
+    public boolean launchUntagging(File inputFile, String outputFileName, String languageString) {
 
         BufferedReader inputReaderC = null;
         PrintWriter workWriterC = null;
         File workFileC = null;
+        Lenguaje lenguaje = lenguaje(languageString);
 
         try {
             inputReaderC = new BufferedReader(new FileReader(inputFile));
@@ -75,7 +76,6 @@ public class SimaeLauncherStandalone extends SimaeLauncher {
         } catch (IOException e) {
             System.out.println("Fallo algo en los argumentos");
         }
-        Lenguaje lenguaje = lenguaje(lenguajeString.toLowerCase());
         simae.fuenteDesmarcado(inputReaderC, workWriterC, lenguaje);
         workWriterC.close();
 

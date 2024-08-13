@@ -113,26 +113,6 @@ public class CommandLineInterface implements Callable<Integer> {
 			}
 
 			languageString = this.getFileExtension(inputFile);
-
-
-			switch (languageString) { //FIXME: esto esta hardcodeado en muchos lugares
-				case ".cpp":
-					languageString = "c++";
-					break;
-				case ".java":
-					languageString = "java8";
-					break;
-				case ".py":
-					languageString = "python3";
-					break;
-				case ".cs":
-					languageString = "csharp";
-					break;
-				default:
-					spec.commandLine().usage(System.out.printf((String) rb.getObject("extension")));
-					return -1;
-			}
-
 			File fileToTag = new File(inputFile);
 			if (!fileToTag.exists()) {
 				System.out.println((String) rb.getObject("invalidInput"));
