@@ -34,7 +34,6 @@ public class CommandLineInterface implements Callable<Integer> {
 	@CommandLine.Option(names = {"-o", "--out"}, paramLabel = "<outputFile>", required=false, descriptionKey = "output")
 	static String outputFile;
 
-	@CommandLine.Option(names = {"-p", "--lang"}, paramLabel = "<language>", descriptionKey="programmingLanguage", required=false)
 	static String languageString;
 
 	@CommandLine.Option(names = { "-l", "--locale" }, paramLabel = "<locale>", descriptionKey = "language")
@@ -114,31 +113,20 @@ public class CommandLineInterface implements Callable<Integer> {
 				outputFile = inputFile;
 			}
 
-			Lenguaje programmingLenguage;
-
-			//if (lenguajeString == null) {
-				languageString = this.getFileExtension(inputFile);
-			//}
+			languageString = this.getFileExtension(inputFile);
 
 
 			switch (languageString) { //FIXME: esto esta hardcodeado en muchos lugares
-				//case "c++":
 				case ".cpp":
-					programmingLenguage = Lenguaje.CPLUSPLUS;
 					languageString = "c++";
 					break;
-				//case "java8":
 				case ".java":
-					programmingLenguage = Lenguaje.JAVA8;
 					languageString = "java8";
 					break;
-				//case "python3":
 				case ".py":
-					programmingLenguage = Lenguaje.PYTHON3;
 					languageString = "python3";
 					break;
 				case ".cs":
-					programmingLenguage = Lenguaje.CSHARP;
 					languageString = "csharp";
 					break;
 				default:

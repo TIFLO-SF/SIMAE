@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>console</headerType>
-  <jar>..\simae\build\libs\simae-0.2.2.jar</jar>
+  <jar>..\simae\build\libs\simae-0.3.0.jar</jar>
   <outfile>output\simae.exe</outfile>
   <errTitle>Falta instalar Java - JRE 11</errTitle>
   <cmdLine></cmdLine>

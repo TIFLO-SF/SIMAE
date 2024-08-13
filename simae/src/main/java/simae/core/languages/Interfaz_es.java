@@ -16,7 +16,6 @@ public class Interfaz_es extends ListResourceBundle {
                     {"language", "Idioma utilizado para el marcado y mensajes"},
                     {"input", "Archivo de entrada"},
                     {"output", "Archivo de salida (por defecto es <inputFile>)"},
-                    {"programmingLanguage", "Lenguaje de programación del archivo de entrada (java8, c++, python3)"},
                     {"gui", "Muestra la interfaz gráfica"},
                     {"version", "Versión de SIMAE"},
                     {"untag", "Quitar las marcas de SIMAE de <inputFile>"},

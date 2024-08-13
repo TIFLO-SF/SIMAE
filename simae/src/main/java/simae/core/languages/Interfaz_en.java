@@ -16,7 +16,6 @@ public class Interfaz_en extends ListResourceBundle {
                     {"untag", "Removes SIMAE tags from <inputFile>"},
                     {"input", "Input filename"},
                     {"output", "Output filename (default is <inputFile>)"},
-                    {"programmingLanguage", "Input file programming language (java8, c++, python3)"},
                     {"gui", "Shows graphical interface"},
                     {"version", "Version of SIMAE"},
                     {"help", "Displays this usage description"},

@@ -16,7 +16,6 @@ Parámetros posibles:
 
 Parámetro      Nombre completo        Descripción 
 -o             --out=<outputFile>     Archivo de salida (por defecto es <inputFile>)
--p             --lang=<language>      Lenguaje de programación del archivo de entrada (java8, c++, python3)
 -l             --locale=<locale>      Idioma utilizado para el marcado y mensajes
 -u             --untag                Quitar las marcas de SIMAE de <inputFile>
 -s             --sound                Reproduce un sonido para indicar el resultado del proceso (solo CLI)
@@ -32,6 +31,6 @@ Java                    java8
 Python (versión 3.x)    python3
 
 Ejemplo:
-java -jar simae-0.2.2.jar test.py
+java -jar simae-0.3.0.jar test.py
 
 -----------------------------------------
