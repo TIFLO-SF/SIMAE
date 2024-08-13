@@ -9,7 +9,7 @@
   "errorEncoding":"Ocurrió un error al obtener el encoding del archivo.",
   "lenguajesDisponibles": "SIMAE esta disponible para archivos .java, .cpp, .cs y .py",
   "soloEditor": "SIMAE solo se puede ejecutar en un editor.",
-  "ayuda":  "Leer marca: Ctrl+Shift+S. \nIr a marca siguiente: Ctrl+Shift+Derecha. \nIr a marca anterior: Ctrl+Shift+Izquierda. \nConfiguracion: Ctrl+Shift+C. \nAyuda: Ctrl+Shift+H. \nPresione enter para volver.",
+  "ayuda":  "Leer marca: Ctrl+Alt+S. \nIr a marca siguiente: Ctrl+Alt+Derecha. \nIr a marca anterior: Ctrl+Alt+Izquierda. \nConfiguracion: Ctrl+Alt+C. \nAyuda: Ctrl+Alt+H. \nPresione enter para volver.",
   "instalando": "Configurando SIMAE...",
   "instalado": "Configuración finalizada.",
   "errorInstalando": "Error al configurar SIMAE: "

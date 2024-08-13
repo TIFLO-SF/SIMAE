@@ -9,7 +9,7 @@ const { exec } = require ('child_process');
 
 
  /**
- * Retorna la URL de descarga del JRE según el sistema operativo del usuario.
+ * Retorna la URL de descarga del JRE según el sistema operßativo del usuario.
  * @returns {string} url - URL de descarga del JRE
  */
 function obtenerURL() {
@@ -124,7 +124,7 @@ async function setup(context) {
             title: msg("instalando"),
             cancellable: false
           }, async () => {
-            const instalado = await javaInstalado();
+            const instalado = await javaInstalado(); // si devuelve false siempre deberia descargarse el jre siempre
             if(!instalado){
                 let jrePath = await instalarJRE(context);
                 jrePath = path.join(jrePath, 'jre');
