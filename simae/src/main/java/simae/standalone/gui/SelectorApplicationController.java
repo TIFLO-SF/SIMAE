@@ -48,6 +48,7 @@ public class SelectorApplicationController {
     private ObservableList listaObservable = FXCollections.observableArrayList();
 
     private FileChooser fc = new FileChooser();
+    private File lastDirectory = new File(System.getProperty("user.dir"));
 
     private String extension() {
         return null;
@@ -75,8 +76,11 @@ public class SelectorApplicationController {
 
     @FXML
     void multiFileChooser() {
+        fc.setInitialDirectory(lastDirectory);
+
         archivos = fc.showOpenMultipleDialog(null);
         if(archivos != null) {
+            lastDirectory = archivos.get(0).getParentFile();
             archivos.stream()
                     .filter(file -> !listaArchivosObjeto.stream().anyMatch(archivo -> file.equals(archivo.getFile()))) //FIXME: sobreescribir equals y usar contains
                     .forEach(file -> listaArchivosObjeto.add(new Archivo(file)));
@@ -87,11 +91,13 @@ public class SelectorApplicationController {
     @FXML
     void multiFolderChooser() throws IOException {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(lastDirectory);
         File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory == null) {
             System.out.println("No seleccionó ninguna carpeta");
         } else {
             Path dir = selectedDirectory.toPath();
+            lastDirectory = selectedDirectory;
             // Lista de extensiones permitidas
             List<String> allowedExtensions = Arrays.asList(".cpp", ".java", ".cs", ".py");
             // Filtra y agrega archivos con las extensiones permitidas
