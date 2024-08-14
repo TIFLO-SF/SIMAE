@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IfElseTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void ifElseTest() throws IOException {
 		  prog = "using System;\n" +
@@ -54,7 +55,7 @@ class IfElseTest extends Tests {
 				  "        Console.WriteLine(\"Fin del programa.\");\n" +
 				  "    }/*/CIERRA Main() DE LINEA 5/*/\n" +
 				  "}/*/CIERRA Program DE LINEA 3/*/\n";
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CSHARP, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CSHARP, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

@@ -10,7 +10,8 @@ import simae.standalone.SimaeLauncherStandalone;
 
 class IfTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testIf() throws IOException {
 		  prog = "int main() {" + nl +
@@ -23,7 +24,7 @@ class IfTest extends Tests {
 		  		"		c++;" + nl +
 		  		"	}/*/CIERRA if(c == 1) DE LINEA 2/*/" + nl +
 		  		"}/*/CIERRA main() DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

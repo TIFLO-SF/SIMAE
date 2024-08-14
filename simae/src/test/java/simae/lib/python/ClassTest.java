@@ -12,14 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClassTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testWhile() throws IOException {
 		  prog = "class MyClass:" + nl +
 				  "  x = 5" + nl;
 		  esperado = "class MyClass:# /CIERRA EN LINEA 2/" + nl +
 				  "  x = 5# /CIERRA class MyClass DE LINEA 1/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.PYTHON3, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.PYTHON3, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

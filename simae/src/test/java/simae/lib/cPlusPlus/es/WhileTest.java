@@ -10,7 +10,8 @@ import simae.standalone.SimaeLauncherStandalone;
 
 class WhileTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testWhile() throws IOException {
 		  prog = "int main() {" + nl +
@@ -23,7 +24,7 @@ class WhileTest extends Tests {
 			  		"		c++;" + nl +
 			  		"	}/*/CIERRA while(c>0) DE LINEA 2/*/" + nl +
 			  		"}/*/CIERRA main() DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

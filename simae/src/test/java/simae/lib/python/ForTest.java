@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ForTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testWhile() throws IOException {
 		  prog = "for x in students:" + nl +
@@ -21,7 +22,7 @@ class ForTest extends Tests {
 		  esperado = "for x in students:# /CIERRA EN LINEA 2/" + nl +
 			  		"    print(\"x\")# /CIERRA for x in students DE LINEA 1/" + nl +
 			  		"print(\"print2\")" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.PYTHON3, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.PYTHON3, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

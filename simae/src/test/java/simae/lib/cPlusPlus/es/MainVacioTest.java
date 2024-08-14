@@ -10,13 +10,14 @@ import simae.standalone.SimaeLauncherStandalone;
 
 class MainVacioTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testMainSinCuerpoDosLineas() throws IOException {
 		  prog = "int main() {" + nl + "}" + nl;
 		  esperado = "int main()/*/CIERRA EN LINEA 2/*/ {" + nl +
 		  		"}/*/CIERRA main() DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

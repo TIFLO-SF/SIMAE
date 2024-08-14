@@ -9,6 +9,7 @@ import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
 
 class PreprocesadorTest extends Tests{
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void preprocesadorTest() throws IOException {
@@ -20,7 +21,7 @@ class PreprocesadorTest extends Tests{
 		 		"	while(c)/*/CIERRA EN LINEA 3/*/ if(c)/*/CIERRA EN LINEA 3/*/ {" + nl +
 		 		"	}/*/CIERRA if(c) DE LINEA 2 y CIERRA while(c) DE LINEA 2/*/" + nl + 
 		 		"}/*/CIERRA main() DE LINEA 1/*/" + nl; 
-		 marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		 marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		 assertEquals(esperado,marcado, "No son iguales.");
 	}
 

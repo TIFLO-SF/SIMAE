@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClassTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void classTest() throws IOException {
 		prog =	"using System;\n" +
@@ -32,7 +33,7 @@ class ClassTest extends Tests {
 				"        int numero = 2;\n" +
 				"    }/*/CIERRA Main(string[] args) DE LINEA 5/*/\n" +
 				"}/*/CIERRA Program DE LINEA 3/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CSHARP, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CSHARP, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

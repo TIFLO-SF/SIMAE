@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SwitchTest extends Tests {
 
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void switchTest() throws IOException {
 		prog =	"using System;\n" +
@@ -47,7 +49,7 @@ class SwitchTest extends Tests {
 				"        }/*/CIERRA switch (numero DE LINEA 9/*/\n" +
 				"    }/*/CIERRA Main(string[] args) DE LINEA 5/*/\n" +
 				"}/*/CIERRA Program DE LINEA 3/*/" + nl;
-		 marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CSHARP, "es");
+		 marcado = simae.launchTagging(prog, Lenguaje.CSHARP, "es");
 		 assertEquals(esperado,marcado, "No son iguales.");
 	}
 

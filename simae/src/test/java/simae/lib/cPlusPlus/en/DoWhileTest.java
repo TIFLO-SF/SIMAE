@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DoWhileTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testDoWhile() throws IOException {
 		  prog = "int main() {" + nl +
@@ -22,7 +23,7 @@ class DoWhileTest extends Tests {
 		  		"	do/*/CLOSES ON LINE 3/*/ {" + nl +
 		  		"	} while(c<0);/*/CLOSES do while OF LINE 2/*/" + nl +
 		  		"}/*/CLOSES main() OF LINE 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
 
 		  assertEquals(esperado,marcado, "The expected code and the result are not equals.");
 	}

@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClassTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testClass() throws IOException {
 		  prog = "class CRender {" + nl +
@@ -24,7 +25,7 @@ class ClassTest extends Tests {
  				  "    char buffer[255];" + nl +
 				  "    void llamadoFuncion(const char *argumento);" + nl +
 				  "}/*/CIERRA class CRender  DE LINEA 1/*/;" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }
