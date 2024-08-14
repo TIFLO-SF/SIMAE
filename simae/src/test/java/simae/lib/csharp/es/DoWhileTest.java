@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DoWhileTest extends Tests {
 
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void doWhileTest() throws IOException {

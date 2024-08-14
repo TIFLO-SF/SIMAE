@@ -3,9 +3,24 @@ package simae.core;
 import simae.core.lib.Lenguaje;
 import simae.core.lib.Simae;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public abstract class SimaeLauncher {
 
-    public static String VERSION = "SIMAE 0.3.0";
+    public static String VERSION;
+
+    static {
+        Properties properties = new Properties();
+        try (InputStream input = SimaeLauncher.class.getResourceAsStream("/version.properties")) {
+            properties.load(input);
+            VERSION = properties.getProperty("version");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo cargar la version.", e);
+        }
+    }
+
     protected Simae simae;
 
 

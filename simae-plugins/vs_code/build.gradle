@@ -1,0 +1,61 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'com.github.node-gradle.node' version '3.0.0'
+}
+
+version = '0.6.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':simae') // Referencia al módulo simae
+}
+
+node {
+    version = '18.14.2'
+    npmVersion = '9.5.0'
+    download = true
+}
+
+shadowJar {
+    archiveClassifier.set('simaeAPI')
+    manifest {
+        attributes 'Main-Class': 'simae.api.API'
+    }
+    // Excluye archivos específicos
+    exclude '**/module-info.class', '**/javafx/**/*.class', '**/picocli/**/*.class', '**/javax**/*.class', '**/**/*.dll', '**/**/*.so', '**/**/*.dylib'
+    doLast {
+        def jarFile = file('build/libs/vs_code-' + version + '-simaeAPI.jar')
+        def newFile = file('src/libs/resources/simae.jar')
+        if (jarFile.exists()) {
+            jarFile.renameTo(newFile)
+        } else {
+            logger.error("No se encontro el .jar: ${jarFile.absolutePath}")
+        }
+    }
+}
+
+task construirPlugin(type: Exec) {
+    dependsOn shadowJar
+    workingDir 'src'
+    String npm = 'npm';
+    String osName = System.getProperty('os.name').toLowerCase()
+    if (osName.contains('windows')) {
+        npm = 'npm.cmd';
+    }
+    commandLine npm, 'run', 'vsce:package'
+}
+
+clean {
+    delete 'src/*.vsix'
+    delete 'src/libs/resources/simae.jar'
+}
+
+build {
+    dependsOn construirPlugin
+}

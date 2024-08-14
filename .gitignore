@@ -21,9 +21,9 @@ simae/src/main/java/simae/cli/Testing.py
 
 #Plugin vs-code
 simae-plugins/vs-code/src/libs/resources/*.jar
-simae-plugins/vs-code/src/node_modules/*
+simae-plugins/vs_code/src/node_modules/*
 simae-plugins/vs-code/src/*.vsix
-simae-plugins/vs-code/src/package-lock.json
+simae-plugins/vs_code/src/package-lock.json
 
 
 launch4j/output/*
