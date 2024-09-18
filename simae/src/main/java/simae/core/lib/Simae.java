@@ -31,7 +31,7 @@ public class Simae {
 	}
 
 
-	public List<AnotacionMarca> iniciaTranslationUnit(ANTLRRegistry antlrRegistry, CharStream antlrEntrada, Lenguaje lenguaje, String language) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+	public List<AnotacionMarca> iniciaReglaPrincipalLenguaje(ANTLRRegistry antlrRegistry, CharStream antlrEntrada, Lenguaje lenguaje, String language) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 		StringTags st;
 		HashMap<String, String> strings;
 		st = new StringTags((language != null) ? language : "");
@@ -60,7 +60,7 @@ public class Simae {
 	public List<AnotacionMarca> fuenteMarcado(BufferedReader br, Lenguaje programmingLanguage, String language) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 		String armaCompleto = this.fuenteDesmarcado(br, programmingLanguage);
 		CharStream antlrEntrada = CharStreams.fromString(armaCompleto);
-		return iniciaTranslationUnit(antlrRegistry, antlrEntrada, programmingLanguage, language);
+		return iniciaReglaPrincipalLenguaje(antlrRegistry, antlrEntrada, programmingLanguage, language);
 	}
 
 	public void fuenteMarcado(BufferedReader br, PrintWriter pw, Lenguaje programmingLanguage, String language) throws IOException {
@@ -71,7 +71,7 @@ public class Simae {
 		HashMap<String, String> strings = st.getStrings();
 		List<AnotacionMarca> todasMarcas = null;
 		try {
-			todasMarcas = iniciaTranslationUnit(antlrRegistry, antlrEntrada, programmingLanguage, language);
+			todasMarcas = iniciaReglaPrincipalLenguaje(antlrRegistry, antlrEntrada, programmingLanguage, language);
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		} catch (InvocationTargetException e) {
