@@ -112,7 +112,7 @@ public class CommandLineInterface implements Callable<Integer> {
 				outputFile = inputFile;
 			}
 
-			languageString = this.getFileExtension(inputFile);
+			languageString = launcher.getFileExtension(inputFile);
 			File fileToTag = new File(inputFile);
 			if (!fileToTag.exists()) {
 				System.out.println((String) rb.getObject("invalidInput"));
@@ -158,13 +158,6 @@ public class CommandLineInterface implements Callable<Integer> {
 		}
 		return 0;
 	}
-		private String getFileExtension (String name){
-			int lastIndexOf = name.lastIndexOf(".");
-			if (lastIndexOf == -1) {
-				return ""; // empty extension
-			}
-			return name.substring(lastIndexOf);
-		}
 
 }
 

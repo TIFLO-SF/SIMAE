@@ -9,7 +9,7 @@ const { exec } = require ('child_process');
 
 
  /**
- * Retorna la URL de descarga del JRE según el sistema operßativo del usuario.
+ * Retorna la URL de descarga del JRE según el sistema operativo del usuario.
  * @returns {string} url - URL de descarga del JRE
  */
 function obtenerURL() {
@@ -98,20 +98,27 @@ async function instalarJRE(context) {
  * @returns {Promise<boolean>} instalado - Retorna true en caso de que JAVA esté instalado, false en caso contrario.
  */
 async function javaInstalado() {
-    return new Promise((resolve) => {
-      exec('java -version', (error, stdout, stderr) => {
-        if (error) {
-          resolve(false);
-          return;
-        }
-        if (stderr.includes('java version') || stderr.includes('openjdk version')) {
+  return new Promise((resolve) => {
+    exec('java -version', (error, stdout, stderr) => {
+      if (error) {
+        resolve(false);
+        return;
+      }
+      const versionMatch = stderr.match(/version "(\d+)\.(\d+)/);
+      if (versionMatch) {
+        const majorVersion = parseInt(versionMatch[1], 10);
+        const minorVersion = parseInt(versionMatch[2], 10);
+        if (majorVersion > 11 || (majorVersion === 11 && minorVersion >= 0)) {
           resolve(true);
         } else {
           resolve(false);
         }
-      });
+      } else {
+        resolve(false);
+      }
     });
-  }
+  });
+}
 
  /**
  * @param {vscode.ExtensionContext} context
@@ -124,7 +131,7 @@ async function setup(context) {
             title: msg("instalando"),
             cancellable: false
           }, async () => {
-            const instalado = await javaInstalado(); // si devuelve false siempre deberia descargarse el jre siempre
+            const instalado = await javaInstalado();
             if(!instalado){
                 let jrePath = await instalarJRE(context);
                 jrePath = path.join(jrePath, 'jre');
