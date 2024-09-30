@@ -9,7 +9,7 @@ plugins {
     id 'com.github.node-gradle.node' version '3.0.0'
 }
 
-version = '0.6.0'
+version = '1.0.0'
 
 compileJava {
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
