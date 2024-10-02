@@ -10,7 +10,8 @@ import simae.standalone.SimaeLauncherStandalone;
 
 class ForDosLineasTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testForSeparado() throws IOException {
 		  prog = "int main() {" + nl +
@@ -25,7 +26,7 @@ class ForDosLineasTest extends Tests {
 		  		"		c++;" + nl +
 		  		"	}/*/CIERRA for(int i = 0; i<10; i++) DE LINEA 2/*/" + nl +
 		  		"}/*/CIERRA main() DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

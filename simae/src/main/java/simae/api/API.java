@@ -12,11 +12,10 @@ import java.util.List;
 public class API {
 
     public static void main(String[] args) {
-        String languageString = getFileExtension(args[0]);
+        SimaeLauncherAPI launcher = new SimaeLauncherAPI();
+        String languageString = launcher.getFileExtension(args[0]);
         Charset codificacion = getEncoding(args[1]);
         String idioma = args[2];
-
-        SimaeLauncherAPI launcher = new SimaeLauncherAPI();
         List<AnotacionMarca> marcas = null;
         try {
             marcas = launcher.obtenerMarcas(new File(args[0]), languageString, codificacion, idioma);
@@ -36,16 +35,6 @@ public class API {
         }
     }
 
-
-
-
-    private static String getFileExtension(String name) {
-        int lastIndexOf = name.lastIndexOf(".");
-        if (lastIndexOf == -1) {
-            return ""; // empty extension
-        }
-        return name.substring(lastIndexOf);
-    }
 
     public static Charset getEncoding(String encodingJS) {
         switch (encodingJS.toUpperCase()) {

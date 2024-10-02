@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PreprocesadorTest extends Tests {
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void preprocesadorTest() throws IOException {
@@ -22,7 +23,7 @@ class PreprocesadorTest extends Tests {
 		 		"	while(c)/*/CLOSES ON LINE 3/*/ if(c)/*/CLOSES ON LINE 3/*/ {" + nl +
 		 		"	}/*/CLOSES if(c) OF LINE 2 and CLOSES while(c) OF LINE 2/*/" + nl +
 		 		"}/*/CLOSES main() OF LINE 1/*/" + nl;
-		 marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
+		 marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
 		 assertEquals(esperado,marcado, "The expected code and the result are not equals.");
 	}
 

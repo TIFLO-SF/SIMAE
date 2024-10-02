@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DoWhileTest extends Tests {
 
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void doWhileTest() throws IOException {
@@ -45,7 +46,7 @@ class DoWhileTest extends Tests {
 				"        } while (contador < 5);/*/CIERRA DO DE LINEA 9/*/\n" +
 				"    }/*/CIERRA Main() DE LINEA 5/*/\n" +
 				"}/*/CIERRA Program DE LINEA 3/*/\n";
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CSHARP, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CSHARP, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ForTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void forTest() throws IOException {
 		  prog = "using System;\n" +
@@ -38,7 +39,7 @@ class ForTest extends Tests {
 				  "        }/*/CIERRA for (int i = 1; i <= 5; i++) DE LINEA 7/*/\n" +
 				  "    }/*/CIERRA Main() DE LINEA 5/*/\n" +
 				  "}/*/CIERRA Program DE LINEA 3/*/\n";
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CSHARP, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.CSHARP, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

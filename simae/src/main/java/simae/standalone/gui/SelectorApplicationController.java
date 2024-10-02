@@ -9,9 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
-import simae.standalone.lib.SimaeStandalone;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,23 +48,9 @@ public class SelectorApplicationController {
     private ObservableList listaObservable = FXCollections.observableArrayList();
 
     private FileChooser fc = new FileChooser();
+    private File lastDirectory = new File(System.getProperty("user.dir"));
 
     private String extension() {
-        return null;
-    }
-
-    private String lenguaje(String extension) {
-        switch (extension) {
-            case ".cpp":
-                return "C++";
-            case ".java":
-                return "Java";
-            case ".py":
-                return "Python3";
-            case "cSharp":
-            case ".cs":
-                return "CSharp";
-        }
         return null;
     }
 
@@ -92,12 +76,14 @@ public class SelectorApplicationController {
 
     @FXML
     void multiFileChooser() {
+        fc.setInitialDirectory(lastDirectory);
+
         archivos = fc.showOpenMultipleDialog(null);
         if(archivos != null) {
+            lastDirectory = archivos.get(0).getParentFile();
             archivos.stream()
                     .filter(file -> !listaArchivosObjeto.stream().anyMatch(archivo -> file.equals(archivo.getFile()))) //FIXME: sobreescribir equals y usar contains
                     .forEach(file -> listaArchivosObjeto.add(new Archivo(file)));
-
             actualizaLista();
         }
     }
@@ -105,13 +91,18 @@ public class SelectorApplicationController {
     @FXML
     void multiFolderChooser() throws IOException {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(lastDirectory);
         File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory == null) {
-            System.out.println("No seleccinó ninguna carpeta");
+            System.out.println("No seleccionó ninguna carpeta");
         } else {
             Path dir = selectedDirectory.toPath();
+            lastDirectory = selectedDirectory;
+            // Lista de extensiones permitidas
+            List<String> allowedExtensions = Arrays.asList(".cpp", ".java", ".cs", ".py");
+            // Filtra y agrega archivos con las extensiones permitidas
             Files.find(dir, Integer.MAX_VALUE, (path, attributes) ->
-                            path.getFileName().toString().toLowerCase().endsWith(extension()))
+                            allowedExtensions.stream().anyMatch(ext -> path.getFileName().toString().toLowerCase().endsWith(ext)))
                     .forEach(file -> listaArchivosObjeto.add(new Archivo(file.toFile())));
             actualizaLista();
         }
@@ -141,32 +132,25 @@ public class SelectorApplicationController {
                         !(simaeLauncher.launchTagging(
                                 ((Archivo)file).getFile(),
                                 ((Archivo)file).getFile().toString(),
-                                lenguaje(file.toString().substring(file.toString().lastIndexOf(".")))
+                                file.toString().substring(file.toString().lastIndexOf("."))
                         ) == 0) :
                         !simaeLauncher.launchUntagging(
                                 ((Archivo)file).getFile(),
                                 ((Archivo)file).getFile().toString(),
-                                lenguaje(file.toString().substring(file.toString().lastIndexOf(".")))
+                                file.toString().substring(file.toString().lastIndexOf("."))
                         ))) {
-            SimaeStandalone.reproducirAudio(1);
+            simaeLauncher.reproducirAudio(1);
             textoError.setVisible(true);
         }
 
         if (!textoError.isVisible()) {
-            SimaeStandalone.reproducirAudio(0);
+            simaeLauncher.reproducirAudio(0);
             textoProcesado.setVisible(true);
         }
 
-
-        /*for (File file : archivos) {
-            System.out.println(file.toString().substring(file.toString().lastIndexOf(".")));
-            simae.marcaDesmarcaPorArchivos(file, file.toString(), lenguaje(file.toString().substring(file.toString().lastIndexOf("."))), decideMarca);
-        }*/
-        //archivos.parallelStream().forEach(file -> simae.marcaDesmarcaPorArchivos(file, file.toString(), lenguaje(file.toString().substring(file.toString().lastIndexOf("."))), decideMarca));
         long fin = System.currentTimeMillis();
         long resta = fin - inicio;
         System.out.println("Tiempo de ejec: " + resta + " milisegundos.");
-
     }
 
 

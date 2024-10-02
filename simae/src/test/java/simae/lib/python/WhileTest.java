@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WhileTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testWhile() throws IOException {
 		  prog = "while(c):" + nl +
@@ -21,7 +22,7 @@ class WhileTest extends Tests {
 		  esperado = "while(c):# /CIERRA EN LINEA 2/" + nl +
 			  		"    print(\"print1\")# /CIERRA while(c) DE LINEA 1/" + nl +
 			  		"print(\"print2\")" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.PYTHON3, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.PYTHON3, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

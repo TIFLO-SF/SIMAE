@@ -3,6 +3,8 @@ const { mostrarMarcas, armarMultimap, moverCursor, abrirAyuda } = require('./fun
 const { msg, getLocale } = require('./locale.js');
 const i18next = require('i18next');
 const path = require('path');
+const fs = require('fs');
+const { setup, javaInstalado } = require('./setup.js');
 
 let ultimoContenido = null;
 let ultimasMarcas = null;
@@ -10,9 +12,17 @@ let ultimasMarcas = null;
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+async function activate(context) {
 
-/**
+  cambiaLenguaje(); //cambia el lenguaje al principio para que se muestre el progreso de instalación en el lenguaje del usuario
+
+  //se ejecuta el setup si no está instalado, o si no existe el jre y no está instalado java.
+  const javaInst = await javaInstalado();
+  if (!context.globalState.get('instalado', false) || (!fs.existsSync(path.join(context.extensionPath, 'jre')) && !javaInst)) {
+    setup(context);
+  } 
+
+  /**
  * Muestra una hint con las marcas de SIMAE en la linea que se encuentra el usuario.
  * @function leerMarca
  */

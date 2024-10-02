@@ -9,13 +9,14 @@ import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
 
 class ArchivoConDeclaracionDeVariableTest extends Tests{
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void testArchivoConDeclaracionDeVariableTest() throws IOException {
 		 
 		 prog = "int a = 4;" + nl;
 		 esperado = "int a = 4;" + nl;
-		 marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		 marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		 assertEquals(esperado,marcado, "No son iguales.");
 	}
 

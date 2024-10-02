@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IfTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void ifTest() throws IOException {
 		  prog = "a = 33" + nl +
@@ -23,7 +24,7 @@ class IfTest extends Tests {
 				  "b = 200" + nl +
 				  "if b > a:# /CIERRA EN LINEA 4/" + nl +
 				  "  print(\"b is greater than a\")# /CIERRA if b > a DE LINEA 3/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.PYTHON3, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.PYTHON3, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

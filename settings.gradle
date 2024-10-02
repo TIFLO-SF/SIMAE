@@ -9,3 +9,4 @@
 
 rootProject.name = 'simae'
 include('simae', 'simae-languages')
+include 'simae-plugins:vs_code'

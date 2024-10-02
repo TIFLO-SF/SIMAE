@@ -9,6 +9,7 @@ import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
 
 class DosMarcasJuntasTest extends Tests{
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	@Test
 	void testDosMarcasJuntas() throws IOException {
@@ -26,7 +27,7 @@ class DosMarcasJuntasTest extends Tests{
 		 		"	}/*/CIERRA if(c) DE LINEA 4 y CIERRA while(c) DE LINEA 3/*/" + nl + 
 		 		"" + nl +
 		 		"}/*/CIERRA main() DE LINEA 1/*/" + nl;
-		 marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
+		 marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "es");
 		 assertEquals(esperado,marcado, "No son iguales.");
 	}
 

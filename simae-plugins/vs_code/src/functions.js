@@ -1,8 +1,9 @@
 const vscode = require('vscode');
 const jschardet = require('jschardet');
+const path = require('path');
 const { spawn } = require('child_process');
 const { msg } = require('./locale.js');
-
+const { Marca } = require('./models/marca.js')
 
 
  /**
@@ -31,45 +32,65 @@ function mostrarMarcas(multimap, editor) {
   }
   
 
- /**
- * Ejecuta el archivo simae.jar mediante el comando 'java' y devuelve un multimap de marcas resultante.
+/**
+ * Ejecuta el archivo simae.jar utilizando el JRE configurado y devuelve un multimap de marcas resultante.
  * @param {string} filePath - La ruta absoluta del JAR de SIMAE.
  * @param {Object} context - El contexto del editor de vs code.
  * @param {vscode.TextEditor} editor - El editor que se encuentra activo y donde está abierto el archivo.
+ * @param {string} idioma - El idioma para la ejecución.
  * @returns {Promise<Map<number, Marca[]>>} Una promesa que se resuelve con un objeto Map que contiene las marcas.
- * @throws {string} Si ocurrio un error en la ejecución del JAR.
+ * @throws {string} Si ocurrió un error en la ejecución del JAR.
  */
+async function armarMultimap(filePath, context, editor, idioma) {
+  let jrePath = context.globalState.get('jrePath');
+  if (!jrePath) {
+    vscode.window.showErrorMessage('Error: JRE path not found.');
+    return null;
+  }
+
+  const javaBin = path.join(jrePath, 'bin', 'java');
+  
+  process.env['JAVA_HOME'] = jrePath;
+  process.env['PATH'] = `${path.join(jrePath, 'bin')}${path.delimiter}${process.env['PATH']}`;
 
 
- async function armarMultimap(filePath, context, editor, idioma) {
-   const path = require('path'); //path
-   const simaeJar = path.join(context.extensionPath, 'libs', 'resources', 'simae.jar'); //path relativo del jar
-   let errorConsola = '';
-   await editor.document.save();
-   return new Promise((resolve, reject) => {
-     getEncoding(editor).then(encoding => {
-       let encodingString = encoding ? encoding : "UTF-8";
-         const proceso = spawn('java', ['-jar', simaeJar, filePath, encodingString, idioma]);
-         let salidaConsola = '';
-         proceso.stdout.on('data', (datos) => {
-           salidaConsola += datos;
-         });
-         proceso.stderr.on('data', (datos) => {
-           errorConsola += datos;
-         });
-         proceso.on('close', (code) => {
-           if (code == 0) {
-             console.log("Idioma: "+  idioma);
-             const salida = salidaConsola.trim().split('\n');
-             const marcas = procesarSalida(salida);
-             resolve(marcas); //si todo ok resuelve la promesa con el multimap
-           } else {
-             reject(msg("errorEjecucion") + " " +  errorConsola); //falla porque se obtuvo codigo distinto de 0
-           }
-         });
-     });
-   });
- }
+  const simaeJar = path.join(context.extensionPath, 'libs', 'resources', 'simae.jar');
+  let errorConsola = '';
+  await editor.document.save();
+
+  return new Promise((resolve, reject) => {
+    getEncoding(editor).then(encoding => {
+      let encodingString = encoding ? encoding : "UTF-8"; //la codificacion por defecto es UTF-8
+      const proceso = spawn(javaBin, ['-jar', simaeJar, filePath, encodingString, idioma]);
+
+      let salidaConsola = '';
+      proceso.stdout.on('data', (datos) => {
+        salidaConsola += datos;
+      });
+
+      proceso.stderr.on('data', (datos) => {
+        errorConsola += datos;
+      });
+
+      proceso.on('close', (code) => {
+        if (code == 0) {
+          console.log("Idioma: " + idioma);
+          const salida = salidaConsola.trim().split('\n');
+          const marcas = procesarSalida(salida);
+          resolve(marcas);
+        } else {
+          vscode.window.showErrorMessage("Error en la ejecución: " + errorConsola);
+          reject(msg("errorEjecucion") + " " + errorConsola);
+        }
+      });
+
+      proceso.on('error', (err) => {
+        vscode.window.showErrorMessage("Error al iniciar el proceso: " + err.message);
+        reject(err.message);
+      });
+    });
+  });
+}
 
     
     /**
@@ -97,7 +118,8 @@ function mostrarMarcas(multimap, editor) {
  /**
  * Convierte el multimap en un arreglo de objetos Marca.
  * @param {Map<number, Marca[]>} multimap - El Map que contiene las marcas agrupadas por fila.
- * @returns {Array} Arreglo de marcas. Si hay mas de una marca con la misma clave se colocan de forma consecutiva en el arreglo
+ * @returns {Array<Marca>} Arreglo de marcas. Si hay mas de una marca con la misma clave se colocan de forma consecutiva en el arreglo
+ * TODO: El arreglo que se retorna debe ser un arreglo de marcas y luego usarse en los metodos una marca
  */
 
 
@@ -105,10 +127,7 @@ function multimapToArray(multimap) {
   const resultado = [];
   for (const [key, marcas] of multimap) {
     for (const marca of marcas) {
-      let fila= marca.fila;
-      let columna = marca.columna;
-      let texto = marca.marca;
-      resultado.push({fila, columna, texto});
+      resultado.push(marca);
     }
   }
   return resultado;
@@ -116,7 +135,7 @@ function multimapToArray(multimap) {
 
 /**
  * Encuentra la siguiente marca más cercana en dirección derecha a partir de la línea donde se encuentra el usuario.
- * @param {Array} arreglo - Arreglo de marcas.
+ * @param {Array<Marca>} arreglo - Arreglo de marcas.
  * @param {number} fila - El número de línea en la que se encuentra el usuario.
  */
 function siguientePosicion(arreglo, fila) {
@@ -128,12 +147,12 @@ function siguientePosicion(arreglo, fila) {
       return arreglo[i + 1];
     }
   }
-  return -1;
+  return null;
 }
 
 /**
  * Encuentra la siguiente marca más cercana en dirección izquierda a partir de la línea donde se encuentra el usuario.
- * @param {Array} arreglo - Arreglo de marcas
+ * @param {Array<Marca>} arreglo - Arreglo de marcas
  * @param {number} fila - El número de línea en la que se encuentra el usuario.
  */
 function anteriorPosicion(arreglo, fila) {
@@ -145,7 +164,7 @@ function anteriorPosicion(arreglo, fila) {
       return arreglo[i - 1];
     }
   }
-  return -1;
+  return null;
 }
 
 /**
@@ -159,7 +178,7 @@ function moverCursor(ultimasMarcas, editor, antsig){
   const direccion = antsig === 1 ? msg("derecha") : msg("izquierda");
   let arreglo = multimapToArray(ultimasMarcas);
   let siguienteMarca = antsig === 1? siguientePosicion(arreglo, editor.selection.active.line + 1) : anteriorPosicion(arreglo, editor.selection.active.line + 1);
-  if(siguienteMarca != -1){
+  if(siguienteMarca != null){
     const posicion = new vscode.Position(siguienteMarca.fila - 1, siguienteMarca.columna+1);
     const rango = new vscode.Range(posicion, posicion);
     editor.selection = new vscode.Selection(posicion, posicion);
@@ -193,15 +212,6 @@ function abrirAyuda(){
 }
 
 
-
-class Marca {
-  constructor(fila, columna, marca) {
-    this.fila = fila;
-    this.columna = columna;
-    this.marca = marca;
-  }
-
-}
 
 
 module.exports = { //exporta funcionas usadas por la extension

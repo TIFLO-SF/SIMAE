@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClassTest extends Tests {
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
 
 	
 	@Test
@@ -24,7 +25,7 @@ class ClassTest extends Tests {
  				  "    char buffer[255];" + nl +
 				  "    void llamadoFuncion(const char *argumento);" + nl +
 				  "}/*/CLOSES class CRender  OF LINE 1/*/;" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
 		  assertEquals(esperado,marcado, "The expected code and the result are not equals.");
 	}
 }

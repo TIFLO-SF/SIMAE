@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SwitchTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testSwitch() throws IOException {
 		  prog = "int main() {" + nl +
@@ -25,7 +26,7 @@ class SwitchTest extends Tests {
 			  		"" + nl +
 			  		"	}/*/CLOSES switch(c) OF LINE 2/*/" + nl +
 			  		"}/*/CLOSES main() OF LINE 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
 		  assertEquals(esperado,marcado, "The expected code and the result are not equals.");
 	}
 }

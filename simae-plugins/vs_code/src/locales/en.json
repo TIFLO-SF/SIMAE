@@ -9,5 +9,8 @@
   "errorEncoding": "An error occurred while obtaining the file's encoding.",
   "lenguajesDisponibles": "SIMAE is available for .java, .cpp, .cs, and .py files.",
   "soloEditor": "SIMAE can only be executed in an editor.",
-  "ayuda": "Read tag: Ctrl+Shift+S. \nGo to next tag: Ctrl+Shift+Right. \nGo to previous tag: Ctrl+Shift+Left. \nSettings: Ctrl+Shift+C. \nHelp: Ctrl+Shift+H. \nPress enter to go back."
+  "ayuda": "Read tag: Ctrl+Alt+S. \nGo to next tag: Ctrl+Alt+Right. \nGo to previous tag: Ctrl+Alt+Left. \nSettings: Ctrl+Alt+C. \nHelp: Ctrl+Alt+H. \nPress enter to go back.",
+  "instalando": "Configuring SIMAE...",
+  "instalado": "Configuration completed.",
+  "errorInstalando": "Error configuring SIMAE: "
 }

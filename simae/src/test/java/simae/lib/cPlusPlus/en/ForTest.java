@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ForTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testFor() throws IOException {
 		  prog = "int main() {" + nl +
@@ -26,7 +27,7 @@ class ForTest extends Tests {
 			  		"		c++;" + nl +
 			  		"	}/*/CLOSES for(int i = 0; i<10; i++) OF LINE 2/*/" + nl +
 			  		"}/*/CLOSES main() OF LINE 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
+		  marcado = simae.launchTagging(prog, Lenguaje.CPLUSPLUS, "en");
 		  assertEquals(esperado,marcado, "The expected code and the result are not equals.");
 	}
 }

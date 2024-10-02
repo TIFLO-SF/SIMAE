@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IfElseTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void testIfELse() throws IOException {
 		  prog = "if(p==1):" + nl +
@@ -23,7 +24,7 @@ class IfElseTest extends Tests {
 				  "	p=0# /CIERRA if(p==1) DE LINEA 1/" + nl +
 				  "else:# /CIERRA EN LINEA 4/" + nl +
 				  "	p=1# /CIERRA else DE LINEA 3/" +nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.PYTHON3, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.PYTHON3, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

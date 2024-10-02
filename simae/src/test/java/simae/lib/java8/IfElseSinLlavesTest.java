@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IfElseSinLlavesTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void ifElseTest() throws IOException {
 		  prog = "public class Main {" + nl +
@@ -31,7 +32,7 @@ class IfElseSinLlavesTest extends Tests {
 				  "            System.out.println(\"El número es impar\");/*/CIERRA else DE LINEA 5/*/" + nl +
 				  "    }/*/CIERRA void main(String[] args) DE LINEA 2/*/" + nl +
 				  "}/*/CIERRA class Main DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.JAVA8, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.JAVA8, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

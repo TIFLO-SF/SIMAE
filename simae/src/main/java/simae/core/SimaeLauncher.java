@@ -1,18 +1,37 @@
 package simae.core;
 
 import simae.core.lib.Lenguaje;
+import simae.core.lib.Simae;
 
-public class SimaeLauncher {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
-    private static String VERSION = "SIMAE 0.3.0";
-    public SimaeLauncher() {
+public abstract class SimaeLauncher {
+
+    public static String VERSION;
+
+    static {
+        Properties properties = new Properties();
+        try (InputStream input = SimaeLauncher.class.getResourceAsStream("/version.properties")) {
+            properties.load(input);
+            VERSION = properties.getProperty("version");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo cargar la version.", e);
+        }
     }
 
-    public static String getVERSION() {
-        return VERSION;
+    protected Simae simae;
+
+    public String getFileExtension (String name){
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
     }
 
-    public static Lenguaje lenguaje(String lenguajeString) {
+    public Lenguaje lenguaje(String lenguajeString) {
         switch(lenguajeString) {
             case "c++":
             case ".cpp":

@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IfTest extends Tests {
 
-	
+	SimaeLauncherStandalone simae = new SimaeLauncherStandalone();
+
 	@Test
 	void ifTest() throws IOException {
 		  prog = "public class Main {" + nl +
@@ -35,7 +36,7 @@ class IfTest extends Tests {
 				  "        }/*/CIERRA if (c == 5) DE LINEA 5/*/" + nl +
 				  "    }/*/CIERRA void main(String[] args) DE LINEA 3/*/" + nl +
 				  "}/*/CIERRA class Main DE LINEA 1/*/" + nl;
-		  marcado = SimaeLauncherStandalone.launchTagging(prog, Lenguaje.JAVA8, "es");
+		  marcado = simae.launchTagging(prog, Lenguaje.JAVA8, "es");
 		  assertEquals(esperado,marcado, "No son iguales.");
 	}
 }

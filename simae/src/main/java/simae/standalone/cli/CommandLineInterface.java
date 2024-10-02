@@ -9,9 +9,7 @@ import java.util.concurrent.Callable;
 import javafx.application.Application;
 import picocli.CommandLine;
 import simae.core.SimaeLauncher;
-import simae.core.lib.Lenguaje;
 import simae.standalone.SimaeLauncherStandalone;
-import simae.standalone.lib.SimaeStandalone;
 import simae.standalone.gui.SelectorApplication;
 
 class InitLocale {
@@ -27,6 +25,7 @@ class InitLocale {
 //FIXME: faltan tests para la clase
 @CommandLine.Command(resourceBundle = "simae.core.languages.Interfaz", name="simae", sortOptions = false)
 public class CommandLineInterface implements Callable<Integer> {
+	SimaeLauncherStandalone launcher = new SimaeLauncherStandalone();
 
 	@CommandLine.Parameters(index="0", arity="0..1", paramLabel = "<inputFile>", descriptionKey = "input")
 	static String inputFile;
@@ -74,7 +73,7 @@ public class CommandLineInterface implements Callable<Integer> {
 				commandLine.usage(System.out);
 				return;
 			} else if (commandLine.isVersionHelpRequested()) {
-				System.out.println(new SimaeLauncher().getVERSION());
+				System.out.println(SimaeLauncher.VERSION);
 				return;
 			}
 			commandLine.execute(args);
@@ -113,34 +112,11 @@ public class CommandLineInterface implements Callable<Integer> {
 				outputFile = inputFile;
 			}
 
-			languageString = this.getFileExtension(inputFile);
-
-
-			switch (languageString) { //FIXME: esto esta hardcodeado en muchos lugares
-				case ".cpp":
-					languageString = "c++";
-					break;
-				case ".java":
-					languageString = "java8";
-					break;
-				case ".py":
-					languageString = "python3";
-					break;
-				case ".cs":
-					languageString = "csharp";
-					break;
-				default:
-					spec.commandLine().usage(System.out.printf((String) rb.getObject("extension")));
-					return -1;
-			}
-
-			SimaeLauncherStandalone launcher = new SimaeLauncherStandalone();
-
+			languageString = launcher.getFileExtension(inputFile);
 			File fileToTag = new File(inputFile);
-
 			if (!fileToTag.exists()) {
 				System.out.println((String) rb.getObject("invalidInput"));
-				if (withSound != null) SimaeStandalone.reproducirAudio(1);
+				if (withSound != null) launcher.reproducirAudio(1);
 				return 1;
 			}
 
@@ -149,19 +125,19 @@ public class CommandLineInterface implements Callable<Integer> {
 					case 0:
 						System.out.printf((String) rb.getObject("success"));
 						if (withSound != null) {
-							SimaeStandalone.reproducirAudio(0);
+							launcher.reproducirAudio(0);
 						}
 						break;
 					case 1:
 						System.out.println((String) rb.getObject("falloMarcado"));
 						if (withSound != null) {
-							SimaeStandalone.reproducirAudio(1);
+							launcher.reproducirAudio(1);
 						}
 						break;
 					case 2:
 						System.out.println((String) rb.getObject("workFileError"));
 						if (withSound != null) {
-							SimaeStandalone.reproducirAudio(1);
+							launcher.reproducirAudio(1);
 						}
 				}
 			}
@@ -169,26 +145,19 @@ public class CommandLineInterface implements Callable<Integer> {
 				if (launcher.launchUntagging(new File(inputFile), outputFile, languageString)) {
 					System.out.printf((String) rb.getObject("successUntag"));
 					if (withSound != null) {
-						SimaeStandalone.reproducirAudio(0);
+						launcher.reproducirAudio(0);
 					}
 				}
 				else {
 					System.out.println((String) rb.getObject("falloDesmarcado"));
 					if (withSound != null) {
-						SimaeStandalone.reproducirAudio(1);
+						launcher.reproducirAudio(1);
 					}
 				}
 			}
 		}
 		return 0;
 	}
-		private String getFileExtension (String name){
-			int lastIndexOf = name.lastIndexOf(".");
-			if (lastIndexOf == -1) {
-				return ""; // empty extension
-			}
-			return name.substring(lastIndexOf);
-		}
 
 }
 
