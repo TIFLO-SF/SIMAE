@@ -44,23 +44,16 @@ Parámetros posibles:
 |Parámetro|Nombre completo|Descripción|
 |---|---|---|
 |[inputFile]|-|Input filename|
-|-o|--out=outputFile|Output filename (default is inputFile)|
-|-p| --lang=language    |Input file programming language (java8, c++, python3)|
+|-o|--out=outputFile|Output filename (default is inputFile)|\
 |-l| --locale=locale    |Language used for tagging and messages|
 |-u| --untag              |Removes SIMAE tags from inputFile|
 |-s| --sound              |Plays a sound to indicate the result of the process (CLI only)|
-  |-g| --gui|Shows graphical interface|
-  |-h| --help|Displays this usage description|
-  |-v| --version|Version of SIMAE|
-
-|Nombre del lenguaje|Nombre como se debe poner en CLI|
-|-------------------|--------------------------------|
-|C++|c++|
-|Java|java8|
-|Python (versión 3.x)|python3|
+|-g| --gui|Shows graphical interface|
+|-h| --help|Displays this usage description|
+|-v| --version|Version of SIMAE|
 
 Ejemplo:
-java -jar simae-0.2.0-alpha.jar test.py
+java -jar simae-0.3.0.jar test.py
 
 ### Integración en ZinjaI 
 
