@@ -1,0 +1,36 @@
+﻿Instrucciones de uso:
+
+-----------------------------------------
+Uso con GUI (Graphical User Interface)
+
+Ejecutar el archivo .jar.
+
+-----------------------------------------
+Uso con CLI (Command Line Interface)
+
+Desde una terminal, ejecutar el comando:
+
+java -jar simae<version>.jar <nombreDelArchivoDeEntrada> [parámetros]
+
+Parámetros posibles:
+
+Parámetro      Nombre completo        Descripción 
+-o             --out=<outputFile>     Archivo de salida (por defecto es <inputFile>)
+-l             --locale=<locale>      Idioma utilizado para el marcado y mensajes
+-u             --untag                Quitar las marcas de SIMAE de <inputFile>
+-s             --sound                Reproduce un sonido para indicar el resultado del proceso (solo CLI)
+-g             --gui                  Muestra la interfaz gráfica
+-h             --help                 Muestra esta descripción de uso
+-v             --version              Versión de SIMAE
+
+Lenguajes posibles:
+
+Nombre del lenguaje     Nombre como se debe poner en CLI
+C++                     c++
+Java                    java8
+Python (versión 3.x)    python3
+
+Ejemplo:
+java -jar simae-1.0.0.jar test.py
+
+-----------------------------------------
