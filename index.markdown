@@ -31,7 +31,7 @@ La herramienta **modifica el código fuente incorporando comentarios que indican
 
 La herramienta se puede descargar desde [la sección _Releases_](https://github.com/tiflo-sf/simae/releases) del [repositorio de GitHub](https://github.com/tiflo-sf/simae). No deje de leer las instrucciones de instalación y uso en este sitio.
 
-> **IMPORTANTE:** Al tratarse de una versión preliminar, y hasta tanto el programador se haya familiarizado con la herramienta, **recomendamos que SIMAE sea utilizado únicamente con copias de los archivos de código fuente** de interés, evitando así cualquier posible pérdida de información. 
+> **IMPORTANTE:** Hasta tanto el programador se haya familiarizado con la herramienta, **recomendamos que SIMAE sea utilizado únicamente con copias de los archivos de código fuente** de interés, evitando así cualquier posible pérdida de información. 
 
 Desde el [formulario de contacto](https://forms.gle/kABFnMF4jzv6ssZcA) puede dejarnos sus comentarios e inquietudes y registrarse para participar.
 
