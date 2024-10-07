@@ -1,16 +1,16 @@
-﻿Instrucciones de uso:
+Instrucciones de uso:
 
 -----------------------------------------
 Uso con GUI (Graphical User Interface)
 
-Ejecutar el archivo .jar.
+Ejecutar el archivo .exe o el acceso directo.
 
 -----------------------------------------
 Uso con CLI (Command Line Interface)
 
-Desde una terminal, ejecutar el comando:
+Desde una terminal, dirigirse a la carpeta de instalación de SIMAE y ejecutar el comando:
 
-java -jar simae<version>.jar <nombreDelArchivoDeEntrada> [parámetros]
+simae.exe <nombreDelArchivoDeEntrada> [parámetros]
 
 Parámetros posibles:
 
@@ -31,6 +31,6 @@ Java                    java8
 Python (versión 3.x)    python3
 
 Ejemplo:
-java -jar simae-0.3.0.jar test.py
+simae.exe test.py
 
 -----------------------------------------
