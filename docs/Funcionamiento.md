@@ -12,7 +12,7 @@ SIMAE cuenta con dos modos de uso:
 * Utilizando SIMAE como un programa standalone
 * Utilizando SIMAE como plugin de Visual Studio Code o Intellij IDEA
 
-En los apartados se detalla el funcinoamiento de cada uno.
+En los apartados se detalla el funcionamiento de cada uno.
 
 ## Lenguajes soportados
 
