@@ -8,18 +8,36 @@ nav_order: 3
 **SIMAE** está desarrollado en [Java](https://www.java.com/) y es compatible con **_Windows_**, **_macOS_** y **_Linux_**, entre otras plataformas. 
 
 ##### Contenidos
+- [Plugin de Visual Studio Code](#plugin-vscode)
 - [Instalación directa (Windows)](#instalacion-directa)
 - [Instalación estándar (Windows, Linux, macOS) ](#instalacion-estandar)
 - [Integración en ZinjaI IDE](#integracion-en-zinjaI)
-- [Plugin de Visual Studio Code](#plugin-vscode)
- 
+- [Integración en Notepad++](#integracion-en-notepad)
+
+## Plugin para Visual Studio Code <a name="plugin-vscode"/>
+
+A partir de la versión 1.0 de SIMAE, el uso recomendado de la herramienta es mediante el plugin para el editor de código Visual Studio Code. Este plugin contiene características adicionales como:
+
+* Utilizar atajos de teclados para moverse entre marcas y leer la marca actual.
+* Utilizar hints en lugar de comentarios quitando la necesidad de editar el código para utilizar SIMAE.
+* Modificar desde vs-code el lenguaje de las marcas que se utilizará.
+
+Este plugin demostró ser muy práctico a la hora de utilizar SIMAE, y está en contínuo desarrollo para lograr una versión estable y convertirse en el modo de uso recomendado para los usuarios de Visual Studio Code.
+
+La extensión se encuentra disponible para su descarga directa desde el [marketplace](https://marketplace.visualstudio.com/items?itemName=tiflo-sf.simae) de vscode y puede instalarse mediante dos simples pasos:
+
+1. Presionar control + p en Visual Studio Code.
+2. Ejecutar el mandato "ext install tiflo-sf.simae".
+
+En caso de preferir utilizar otro IDE, SIMAE cuenta con una versión llamada "SIMAE standalone" que permite su integración en forma de macro con otros IDE, o la utilización manual de la aplicación mediante una Interfaz Gráfica de Usuario, o una Interfaz de Línea de Comandos. A continuación se muestran las diferentes alternativas de instalación manual para usuarios que no deseen utilizar el plugin de Visual Studio Code.
+
 ## Alternativa 1. Instalación directa (Windows) <a name ="instalacion-directa"/>
 
-Para instalar **SIMAE** en un paso descargue y ejecute el instalador para Windows siguiente:
+Para instalar **SIMAE standalone** en un paso descargue y ejecute el instalador para Windows siguiente:
 
 |Release|Enlace directo|Fecha de publicación|
 |---|---|---|
-|0.3.0| [simae-instalador.exe](https://github.com/tiflo-sf/simae/releases/download/v0.3.0/simae-instalador.exe)| 2023\-11\-28|
+|1.0.0| [simae-instalador.exe](https://github.com/tiflo-sf/simae/releases/download/v1.0.0/simae-instalador.exe)| 2024\-10\-07|
 
 Este instalador configura un runtime personalizado de Java y la aplicación **SIMAE** como archivo `simae.exe` con acceso directo desde el escritorio (opcional).
 
@@ -28,7 +46,7 @@ Este instalador configura un runtime personalizado de Java y la aplicación **SI
 
 ### Paso 1. Instalación de Runtime Java
 
-**SIMAE** es una aplicación **Java**, y requiere instalar previamente el **Java Development Kit (JDK)** versión 11 o posterior.
+**SIMAE standalone** es una aplicación **Java**, y requiere instalar previamente el **Java Development Kit (JDK)** versión 11 o posterior.
 
 > Para instalar Java, las principales versiones disponibles son:
 > - [Oracle JDK](https://www.oracle.com/java/technologies/downloads/)
@@ -49,7 +67,7 @@ Descargar la última versión de la herramienta desde el apartado [Releases](htt
 
 |Release|Enlace directo|Fecha de publicación|
 |---|---|---|
-|0.3.0| [simae-0.3.0.zip](https://github.com/tiflo-sf/simae/releases/download/v0.3.0/simae.zip)| 2023\-11\-28|
+|1.0.0| [simae-0.1.0.zip](https://github.com/tiflo-sf/simae/releases/download/v1.0.0/simae.zip)| 2024\-10\-07|
 
 Crear una carpeta para la instalación de SIMAE. La carpeta se denominará `C:\simae\` 
 
@@ -115,24 +133,38 @@ Finalmente, la macro se encuentra agregada al IDE.
 
 ![Pestaña de ZinjaI con macros añadidas](https://user-images.githubusercontent.com/42981462/175972523-b1d526d3-3f07-47a2-89b4-4497816c8647.png)
 
-## Plugin para Visual Studio Code <a name="plugin-vscode"/>
+## Integración en Notepad++ (opcional) <a name="integracion-en-notepad"/>
 
-Desde SIMAE 0.3.0, se incluye un nuevo plugin experimental que permite:
+Una vez finalizada la instalación de la herramienta, se puede agregar las macros para ejecutar SIMAE desde Notepad++.
 
-* Utilizar atajos de teclados para moverse entre marcas y leer la marca actual.
-* Utilizar hints en lugar de comentarios quitando la necesidad de editar el código para utilizar SIMAE.
-* Modificar desde vs-code el lenguaje de las marcas que se utilizará.
+### Marcado
 
-Este plugin demostró ser muy práctico a la hora de utilizar SIMAE, y está en contínuo desarrollo para lograr una versión estable y convertirse en el modo de uso recomendado para los usuarios de Visual Studio Code.
-
-Las instrucciones de instalación están actualmente en construcción. No obstante, el plugin se encuentra disponible para usuarios experimentados que deseen probarlo.
-
-|Release de plugin|Versión del motor|Enlace directo|Fecha de publicación|
-|---|---|---|---|
-|0.0.1|0.3.0|[simae-0.0.1.vsix](https://github.com/tiflo-sf/simae/releases/download/v0.3.0/simae-0.0.1.vsix)| 2023\-11\-28|
-
-La extensión se encuentra también disponible en [marketplace](https://marketplace.visualstudio.com/items?itemName=tiflo-sf.simae) y puede instalarse presionando control + p en vscode e ingresando el siguiente mandato:
+1. Abrir Notepad++
+2. Presionar F5
+3.Pegar en el campo de texto "Programa a ejecutar" la siguiente instrucción:
 
 ```
-ext install tiflo-sf.simae
+C:\simae\1.0.0\simae.exe $(FULL_CURRENT_PATH) -s  
 ```
+
+4. Presionar el botón Guardar…
+5. En el campo de texto 'Nombre' colocar SIMAE MARCADO
+6. Seleccionar las opciones CTRL y ALT
+7. En la lista desplegable elegir la opción M
+8. Presionar el botón OK
+
+### Desmarcado
+
+9. Abrir Notepad++
+10. Presionar F5
+11. Pegar en el campo de texto 'Programa a ejecutar' la siguiente instrucción:
+
+```
+C:\simae\1.0.0\simae.exe $(FULL_CURRENT_PATH) -u
+```
+
+12. Presionar el botón Guardar…
+13. En el campo de texto 'Nombre' colocar SIMAE DESMARCADO
+14. Seleccionar las opciones SHIFT y ALT
+15. En la lista desplegable elegir la opción B
+16. Presionar el botón OK

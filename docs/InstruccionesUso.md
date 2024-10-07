@@ -1,5 +1,5 @@
 ---
-title: Instrucciones de uso
+title: Instrucciones de uso standalone
 has_children: true
 nav_order: 4
 ---

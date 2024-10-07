@@ -1,6 +1,6 @@
 ---
 title: Interfaz por Línea de Comandos
-parent: Instrucciones de uso
+parent: Instrucciones de uso standalone
 has_children: false
 ---
 

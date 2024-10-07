@@ -23,13 +23,13 @@ nav_order: 1
 
 La herramienta **modifica el código fuente incorporando comentarios que indican las líneas de comienzo y finalización de las distintas estructuras**, y está pensada tanto para estudiantes que dan sus primeros pasos en programación como para desarrolladores profesionales que escriben código fuente todos los días. 
 
-**SIMAE** está escrito en Java, y soporta actualmente el marcado de las principales estructuras de código de los lenguajes **C++**, **Java** y **Python**. 
+**SIMAE** está escrito en Java, y soporta actualmente el marcado de las principales estructuras de código de los lenguajes **C++**, **C#** **Java** y **Python**. 
 
 ## Estado de la herramienta <a name ="estado-de-la-herramienta"/>
 
 **SIMAE** se encuentra en desarrollo y disponible para su evaluación por la comunidad.
 
-Para probar la herramienta puede descargar una versión **_alpha_** desde [la sección _Releases_](https://github.com/tiflo-sf/simae/releases) del [repositorio de GitHub](https://github.com/tiflo-sf/simae). No deje de leer las instrucciones de instalación y uso en este sitio.
+La herramienta se puede descargar desde [la sección _Releases_](https://github.com/tiflo-sf/simae/releases) del [repositorio de GitHub](https://github.com/tiflo-sf/simae). No deje de leer las instrucciones de instalación y uso en este sitio.
 
 > **IMPORTANTE:** Al tratarse de una versión preliminar, y hasta tanto el programador se haya familiarizado con la herramienta, **recomendamos que SIMAE sea utilizado únicamente con copias de los archivos de código fuente** de interés, evitando así cualquier posible pérdida de información. 
 
@@ -41,5 +41,4 @@ Líneas de trabajo actuales:
 
 * Implementar integración continua.
 * Traducción a otros idiomas (internacionalización).
-* Mejora de la CLI (interfaz de línea de comandos).
 * Re-diseño de módulos de código para facilitar su desarrollo.
